@@ -59,11 +59,102 @@ const spec = {
       ]
     },
 
-    /* COLUMN 2 */
-    {
-      "vconcat": [
+//     /* COLUMN 2 */
+//     {
+//       "vconcat": [
 
-        /* STREAMGRAPH */
+//         /* STREAMGRAPH */
+//         {
+//           "width": 300, "height": 200,
+//           "data": {
+//             "url": "HW_III.csv",
+//             "format": {"type": "csv"},
+//             "parse": {"OrderDate": "utc:'%m/%d/%Y'"}
+//           },
+//           "title": "Streamgraph: Total over Time by Item",
+//           "mark": {"type": "area", "interpolate": "basis"},
+//           "encoding": {
+//             "x": {"field": "OrderDate", "type": "temporal"},
+//             "y": {
+//               "aggregate": "sum",
+//               "field": "Total",
+//               "type": "quantitative",
+//               "stack": "center"
+//             },
+//             "color": {"field": "Item", "type": "nominal"}
+//           }
+//         },
+
+//         /* TRELLIS HISTOGRAM */
+//         {
+//           "data": {"url": "HW_III.csv", "format": {"type": "csv"}},
+//           "title": "Trellis Histogram of Units (with Mean)",
+//           "facet": {"field": "Item", "type": "nominal"},
+//           "spec": {
+//             "width": 150,
+//             "height": 150,
+//             "layer": [
+//               {
+//                 "mark": "bar",
+//                 "encoding": {
+//                   "x": {"bin": true, "field": "Units", "type": "quantitative", "axis": {"title": "Units (Binned)"}},
+//                   "y": {"aggregate": "count", "type": "quantitative", "axis": {"title": "Count"}}
+//                 }
+//               },
+//               {
+//                 "mark": {"type": "rule", "color": "red"},
+//                 "encoding": {
+//                   "x": {"aggregate": "mean", "field": "Units", "type": "quantitative"}
+//                 }
+//               }
+//             ]
+//           }
+//         }
+
+//       ]
+//     },
+
+//     /* COLUMN 3 */
+//     {
+//       "vconcat": [
+
+//         /* LINE CHART WITH ZOOM */
+//         {
+//           "width": 300, "height": 200,
+//           "data": {
+//             "url": "HW_III.csv",
+//             "format": {"type": "csv"},
+//             "parse": {"OrderDate": "utc:'%m/%d/%Y'"}
+//           },
+//           "title": "Multi-Line Chart: Total Sales over Time by Rep",
+//           "mark": {"type": "line", "point": true},
+//           "selection": {
+//             "zoom": {"type": "interval", "bind": "scales"}
+//           },
+//           "encoding": {
+//             "x": {"field": "OrderDate", "type": "temporal", "axis": {"title": "Date"}},
+//             "y": {"field": "Total", "type": "quantitative","axis": {"title": "Total Sales"}},
+//             "color": {"field": "Rep", "type": "nominal"},
+//             "tooltip": [
+//   {"field": "Rep", "type": "nominal"},
+//   {"field": "Total", "type": "quantitative"},
+//   {"field": "OrderDate", "type": "temporal"}
+// ]
+//           }
+//         }
+
+//       ]
+//     }
+
+//   ]
+// };
+{
+  "vconcat": [
+
+    {
+      "hconcat": [
+
+        /* STREAMGRAPH (UNCHANGED) */
         {
           "width": 300, "height": 200,
           "data": {
@@ -85,40 +176,7 @@ const spec = {
           }
         },
 
-        /* TRELLIS HISTOGRAM */
-        {
-          "data": {"url": "HW_III.csv", "format": {"type": "csv"}},
-          "title": "Trellis Histogram of Units (with Mean)",
-          "facet": {"field": "Item", "type": "nominal"},
-          "spec": {
-            "width": 150,
-            "height": 150,
-            "layer": [
-              {
-                "mark": "bar",
-                "encoding": {
-                  "x": {"bin": true, "field": "Units", "type": "quantitative", "axis": {"title": "Units (Binned)"}},
-                  "y": {"aggregate": "count", "type": "quantitative", "axis": {"title": "Count"}}
-                }
-              },
-              {
-                "mark": {"type": "rule", "color": "red"},
-                "encoding": {
-                  "x": {"aggregate": "mean", "field": "Units", "type": "quantitative"}
-                }
-              }
-            ]
-          }
-        }
-
-      ]
-    },
-
-    /* COLUMN 3 */
-    {
-      "vconcat": [
-
-        /* LINE CHART WITH ZOOM */
+        /* LINE CHART (UNCHANGED) */
         {
           "width": 300, "height": 200,
           "data": {
@@ -136,14 +194,40 @@ const spec = {
             "y": {"field": "Total", "type": "quantitative","axis": {"title": "Total Sales"}},
             "color": {"field": "Rep", "type": "nominal"},
             "tooltip": [
-  {"field": "Rep", "type": "nominal"},
-  {"field": "Total", "type": "quantitative"},
-  {"field": "OrderDate", "type": "temporal"}
-]
+              {"field": "Rep", "type": "nominal"},
+              {"field": "Total", "type": "quantitative"},
+              {"field": "OrderDate", "type": "temporal"}
+            ]
           }
         }
 
       ]
+    },
+
+    /* HISTOGRAM (UNCHANGED) */
+    {
+      "data": {"url": "HW_III.csv", "format": {"type": "csv"}},
+      "title": "Trellis Histogram of Units (with Mean)",
+      "facet": {"field": "Item", "type": "nominal"},
+      "spec": {
+        "width": 150,
+        "height": 150,
+        "layer": [
+          {
+            "mark": "bar",
+            "encoding": {
+              "x": {"bin": true, "field": "Units", "type": "quantitative", "axis": {"title": "Units (Binned)"}},
+              "y": {"aggregate": "count", "type": "quantitative", "axis": {"title": "Count"}}
+            }
+          },
+          {
+            "mark": {"type": "rule", "color": "red"},
+            "encoding": {
+              "x": {"aggregate": "mean", "field": "Units", "type": "quantitative"}
+            }
+          }
+        ]
+      }
     }
 
   ]
