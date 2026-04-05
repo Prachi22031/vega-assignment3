@@ -8,20 +8,20 @@
 <body>
   <h1>Information Visualization Assignment 3</h1>
   <h2>ELL8224</h2>
-  <h2>PRACHI GARgg (2025EEZ8511)</h2>
+  <h2>PRACHI GARG (2025EEZ8511)</h2>
 
-    <div id="vis"></div>
+  <div id="vis"></div>
 
 <script>
 const spec = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+
   "hconcat": [
 
     /* COLUMN 1 */
     {
       "vconcat": [
 
-        /* DONUT CHART (with tooltip) */
         {
           "width": 300, "height": 200,
           "data": {"url": "HW_III.csv", "format": {"type": "csv"}},
@@ -37,7 +37,6 @@ const spec = {
           }
         },
 
-        /* SCATTER WITH BRUSH */
         {
           "width": 300, "height": 200,
           "data": {"url": "HW_III.csv", "format": {"type": "csv"}},
@@ -59,30 +58,61 @@ const spec = {
       ]
     },
 
-    /* COLUMN 2 */
+    /* COLUMN 2 (FIXED ARRANGEMENT) */
     {
       "vconcat": [
 
-        /* STREAMGRAPH */
         {
-          "width": 300, "height": 200,
-          "data": {
-            "url": "HW_III.csv",
-            "format": {"type": "csv"},
-            "parse": {"OrderDate": "utc:'%m/%d/%Y'"}
-          },
-          "title": "Streamgraph: Total over Time by Item",
-          "mark": {"type": "area", "interpolate": "basis"},
-          "encoding": {
-            "x": {"field": "OrderDate", "type": "temporal"},
-            "y": {
-              "aggregate": "sum",
-              "field": "Total",
-              "type": "quantitative",
-              "stack": "center"
+          "hconcat": [
+
+            /* STREAMGRAPH */
+            {
+              "width": 300, "height": 200,
+              "data": {
+                "url": "HW_III.csv",
+                "format": {"type": "csv"},
+                "parse": {"OrderDate": "utc:'%m/%d/%Y'"}
+              },
+              "title": "Streamgraph: Total over Time by Item",
+              "mark": {"type": "area", "interpolate": "basis"},
+              "encoding": {
+                "x": {"field": "OrderDate", "type": "temporal"},
+                "y": {
+                  "aggregate": "sum",
+                  "field": "Total",
+                  "type": "quantitative",
+                  "stack": "center"
+                },
+                "color": {"field": "Item", "type": "nominal"}
+              }
             },
-            "color": {"field": "Item", "type": "nominal"}
-          }
+
+            /* LINE CHART */
+            {
+              "width": 300, "height": 200,
+              "data": {
+                "url": "HW_III.csv",
+                "format": {"type": "csv"},
+                "parse": {"OrderDate": "utc:'%m/%d/%Y'"}
+              },
+              "title": "Multi-Line Chart: Total Sales over Time by Rep",
+              "mark": {"type": "line", "point": true},
+              "selection": {
+                "zoom": {"type": "interval", "bind": "scales"}
+              },
+              "encoding": {
+                "x": {"field": "OrderDate", "type": "temporal", "axis": {"title": "Date"}},
+                "y": {"field": "Total", "type": "quantitative", "axis": {"title": "Total Sales"}},
+                "color": {"field": "Rep", "type": "nominal"},
+                "tooltip": [
+                  {"field": "Rep", "type": "nominal"},
+                  {"field": "Total", "type": "quantitative"},
+                  {"field": "OrderDate", "type": "temporal"}
+                ]
+              }
+            }
+
+          ]
         },
 
         /* TRELLIS HISTOGRAM */
@@ -112,43 +142,10 @@ const spec = {
         }
 
       ]
-    },
-
-    /* COLUMN 3 */
-    {
-      "vconcat": [
-
-        /* LINE CHART WITH ZOOM */
-        {
-          "width": 300, "height": 200,
-          "data": {
-            "url": "HW_III.csv",
-            "format": {"type": "csv"},
-            "parse": {"OrderDate": "utc:'%m/%d/%Y'"}
-          },
-          "title": "Multi-Line Chart: Total Sales over Time by Rep",
-          "mark": {"type": "line", "point": true},
-          "selection": {
-            "zoom": {"type": "interval", "bind": "scales"}
-          },
-          "encoding": {
-            "x": {"field": "OrderDate", "type": "temporal", "axis": {"title": "Date"}},
-            "y": {"field": "Total", "type": "quantitative","axis": {"title": "Total Sales"}},
-            "color": {"field": "Rep", "type": "nominal"},
-            "tooltip": [
-  {"field": "Rep", "type": "nominal"},
-  {"field": "Total", "type": "quantitative"},
-  {"field": "OrderDate", "type": "temporal"}
-]
-          }
-        }
-
-      ]
     }
 
   ]
 };
-
 
 vegaEmbed("#vis", spec);
 </script>
