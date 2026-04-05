@@ -117,7 +117,7 @@
 
     
 
-    <div id="box_chart"></div>
+    <!-- <div id="box_chart"></div>
     <script>
         var boxChart = {
           "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -131,7 +131,7 @@
           }
         };
         vegaEmbed("#box_chart", boxChart);
-    </script>
+    </script> -->
 
 
 
@@ -226,16 +226,16 @@ const spec = {
             "legend": {"title": "Sales Rep"}
           }
         }
-      },
-        {
-          "width": 300, "height": 200,
-          "data": {"url": "HW_III.csv", "format": {"type": "csv"}},
-          "title": "Box and Whisker Plot: Units by Item",
-          "mark": "boxplot",
-          "encoding": {
-            "x": {"field": "Item", "type": "nominal", "axis": {"title": "Item"}},
-            "y": {"field": "Units", "type": "quantitative", "axis": {"title": "Units"}}
-          }
+      }
+        // {
+        //   "width": 300, "height": 200,
+        //   "data": {"url": "HW_III.csv", "format": {"type": "csv"}},
+        //   "title": "Box and Whisker Plot: Units by Item",
+        //   "mark": "boxplot",
+        //   "encoding": {
+        //     "x": {"field": "Item", "type": "nominal", "axis": {"title": "Item"}},
+        //     "y": {"field": "Units", "type": "quantitative", "axis": {"title": "Units"}}
+        //   }
         }
       ]
     }
