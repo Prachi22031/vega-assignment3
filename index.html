@@ -11,7 +11,7 @@
   <h2>PRACHI GARG (2025EEZ8511)</h2>
 
   <!-- OVERVIEW (UNCHANGED) -->
-  <h2>Dashboard Overview</h2>
+  <h2>Multiview</h2>
   <div id="vis"></div>
 
   <!-- INDIVIDUAL VISUALIZATIONS -->
@@ -160,7 +160,92 @@ vegaEmbed("#vis", spec);
 
 /* ================= INDIVIDUAL VISUALS ================= */
 
-/* DONUT */
+// /* DONUT */
+// vegaEmbed("#don_chart", {
+//   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+//   "width": 300, "height": 200,
+//   "data": {"url": "HW_III.csv", "format": {"type": "csv"}},
+//   "title": "Donut Chart: Total Sales by Rep",
+//   "mark": {"type": "arc", "innerRadius": 50},
+//   "encoding": {
+//     "theta": {"field": "Total", "type": "quantitative"},
+//     "color": {"field": "Rep", "type": "nominal"},
+//     "tooltip": true
+//   }
+// });
+
+// /* SCATTER */
+// vegaEmbed("#scatter_chart", {
+//   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+//   "width": 300, "height": 200,
+//   "data": {"url": "HW_III.csv", "format": {"type": "csv"}},
+//   "title": "Correlation: Units vs Unit Cost",
+//   "mark": "point",
+//   "encoding": {
+//     "x": {"field": "Units", "type": "quantitative"},
+//     "y": {"field": "Unit Cost", "type": "quantitative"},
+//     "tooltip": true
+//   }
+// });
+
+// /* STREAM */
+// vegaEmbed("#stream_chart", {
+//   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+//   "width": 300, "height": 200,
+//   "data": {
+//     "url": "HW_III.csv",
+//     "format": {"type": "csv"},
+//     "parse": {"OrderDate": "utc:'%m/%d/%Y'"}
+//   },
+//   "title": "Streamgraph: Total over Time by Item",
+//   "mark": {"type": "area", "interpolate": "basis"},
+//   "encoding": {
+//     "x": {"field": "OrderDate", "type": "temporal"},
+//     "y": {"aggregate": "sum", "field": "Total", "stack": "center"},
+//     "color": {"field": "Item", "type": "nominal"}
+//   }
+// });
+
+// /* LINE */
+// vegaEmbed("#line_chart", {
+//   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+//   "width": 300, "height": 200,
+//   "data": {
+//     "url": "HW_III.csv",
+//     "format": {"type": "csv"},
+//     "parse": {"OrderDate": "utc:'%m/%d/%Y'"}
+//   },
+//   "title": "Multi-Line Chart: Total Sales over Time by Rep",
+//   "mark": {"type": "line", "point": true},
+//   "encoding": {
+//     "x": {"field": "OrderDate", "type": "temporal"},
+//     "y": {"field": "Total", "type": "quantitative"},
+//     "color": {"field": "Rep", "type": "nominal"},
+//     "tooltip": true
+//   }
+// });
+
+// /* HISTOGRAM */
+// vegaEmbed("#hist_chart", {
+//   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+//   "data": {"url": "HW_III.csv", "format": {"type": "csv"}},
+//   "title": "Trellis Histogram of Units",
+//   "facet": {"field": "Item", "type": "nominal"},
+//   "spec": {
+//     "width": 150,
+//     "height": 150,
+//     "mark": "bar",
+//     "encoding": {
+//       "x": {"bin": true, "field": "Units"},
+//       "y": {"aggregate": "count"},
+//       "tooltip": true
+//     }
+//   }
+// });
+
+
+
+/* DONUT (same) */
 vegaEmbed("#don_chart", {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": 300, "height": 200,
@@ -170,25 +255,34 @@ vegaEmbed("#don_chart", {
   "encoding": {
     "theta": {"field": "Total", "type": "quantitative"},
     "color": {"field": "Rep", "type": "nominal"},
-    "tooltip": true
+    "tooltip": [
+      {"field": "Rep", "type": "nominal"},
+      {"field": "Total", "type": "quantitative"}
+    ]
   }
 });
 
-/* SCATTER */
+/* SCATTER (ADD BRUSH) */
 vegaEmbed("#scatter_chart", {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": 300, "height": 200,
   "data": {"url": "HW_III.csv", "format": {"type": "csv"}},
   "title": "Correlation: Units vs Unit Cost",
   "mark": "point",
+  "selection": {
+    "brush": {"type": "interval"}
+  },
   "encoding": {
     "x": {"field": "Units", "type": "quantitative"},
     "y": {"field": "Unit Cost", "type": "quantitative"},
-    "tooltip": true
+    "color": {
+      "condition": {"selection": "brush", "value": "steelblue"},
+      "value": "lightgray"
+    }
   }
 });
 
-/* STREAM */
+/* STREAM (same) */
 vegaEmbed("#stream_chart", {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": 300, "height": 200,
@@ -201,12 +295,17 @@ vegaEmbed("#stream_chart", {
   "mark": {"type": "area", "interpolate": "basis"},
   "encoding": {
     "x": {"field": "OrderDate", "type": "temporal"},
-    "y": {"aggregate": "sum", "field": "Total", "stack": "center"},
+    "y": {
+      "aggregate": "sum",
+      "field": "Total",
+      "type": "quantitative",
+      "stack": "center"
+    },
     "color": {"field": "Item", "type": "nominal"}
   }
 });
 
-/* LINE */
+/* LINE (ADD ZOOM + FULL TOOLTIP) */
 vegaEmbed("#line_chart", {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": 300, "height": 200,
@@ -217,32 +316,50 @@ vegaEmbed("#line_chart", {
   },
   "title": "Multi-Line Chart: Total Sales over Time by Rep",
   "mark": {"type": "line", "point": true},
+  "selection": {
+    "zoom": {"type": "interval", "bind": "scales"}
+  },
   "encoding": {
-    "x": {"field": "OrderDate", "type": "temporal"},
-    "y": {"field": "Total", "type": "quantitative"},
+    "x": {"field": "OrderDate", "type": "temporal", "axis": {"title": "Date"}},
+    "y": {"field": "Total", "type": "quantitative", "axis": {"title": "Total Sales"}},
     "color": {"field": "Rep", "type": "nominal"},
-    "tooltip": true
+    "tooltip": [
+      {"field": "Rep", "type": "nominal"},
+      {"field": "Total", "type": "quantitative"},
+      {"field": "OrderDate", "type": "temporal"}
+    ]
   }
 });
 
-/* HISTOGRAM */
+/* HISTOGRAM (ADD MEAN LINE LAYER) */
 vegaEmbed("#hist_chart", {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "data": {"url": "HW_III.csv", "format": {"type": "csv"}},
-  "title": "Trellis Histogram of Units",
+  "title": "Trellis Histogram of Units (with Mean)",
   "facet": {"field": "Item", "type": "nominal"},
   "spec": {
     "width": 150,
     "height": 150,
-    "mark": "bar",
-    "encoding": {
-      "x": {"bin": true, "field": "Units"},
-      "y": {"aggregate": "count"},
-      "tooltip": true
-    }
+    "layer": [
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {"bin": true, "field": "Units", "type": "quantitative"},
+          "y": {"aggregate": "count", "type": "quantitative"}
+        }
+      },
+      {
+        "mark": {"type": "rule", "color": "red"},
+        "encoding": {
+          "x": {"aggregate": "mean", "field": "Units", "type": "quantitative"}
+        }
+      }
+    ]
   }
 });
 
+
+    
 </script>
 
 </body>
