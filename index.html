@@ -6,7 +6,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 </head>
 <body>
-  <h1>Data Visualization Assignment 3</h1>
+  <h1>Information Visualization Assignment 3</h1>
   <h2>ELL8224</h2>
   <h2>PRACHI GARG (2025EEZ8511)</h2>
 
@@ -27,7 +27,7 @@ const spec = {
           "width": 300, "height": 200,
           "data": {"url": "HW_III.csv", "format": {"type": "csv"}},
           "title": "Donut Chart: Total Sales by Rep",
-          "mark": {"type": "arc", "innerRadius": 60},
+          "mark": {"type": "arc", "innerRadius": 50},
           "encoding": {
             "theta": {"field": "Total", "type": "quantitative"},
             "color": {"field": "Rep", "type": "nominal"},
@@ -92,20 +92,20 @@ const spec = {
           "title": "Trellis Histogram of Units (with Mean)",
           "facet": {"field": "Item", "type": "nominal"},
           "spec": {
-            "width": 120,
-            "height": 120,
+            "width": 150,
+            "height": 150,
             "layer": [
               {
                 "mark": "bar",
                 "encoding": {
-                  "x": {"bin": true, "field": "Units", "type": "quantitative"},
-                  "y": {"aggregate": "count"}
+                  "x": {"bin": true, "field": "Units", "type": "quantitative", "axis": {"title": "Units (Binned)"}},
+                  "y": {"aggregate": "count", "type": "quantitative", "axis": {"title": "Count"}}
                 }
               },
               {
                 "mark": {"type": "rule", "color": "red"},
                 "encoding": {
-                  "x": {"aggregate": "mean", "field": "Units"}
+                  "x": {"aggregate": "mean", "field": "Units", "type": "quantitative"}
                 }
               }
             ]
