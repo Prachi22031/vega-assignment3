@@ -127,16 +127,20 @@ const spec = {
             "format": {"type": "csv"},
             "parse": {"OrderDate": "utc:'%m/%d/%Y'"}
           },
-          "title": "Total Sales over Time by Rep",
+          "title": "Multi-Line Chart: Total Sales over Time by Rep",
           "mark": {"type": "line", "point": true},
           "selection": {
             "zoom": {"type": "interval", "bind": "scales"}
           },
           "encoding": {
-            "x": {"field": "OrderDate", "type": "temporal"},
-            "y": {"field": "Total", "type": "quantitative"},
+            "x": {"field": "OrderDate", "type": "temporal", "axis": {"title": "Date"}},
+            "y": {"field": "Total", "type": "quantitative","axis": {"title": "Total Sales"}},
             "color": {"field": "Rep", "type": "nominal"},
-            "tooltip": true
+            "tooltip": [
+  {"field": "Rep", "type": "nominal"},
+  {"field": "Total", "type": "quantitative"},
+  {"field": "OrderDate", "type": "temporal"}
+]
           }
         }
 
